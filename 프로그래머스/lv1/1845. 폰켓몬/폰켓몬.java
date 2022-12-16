@@ -1,21 +1,34 @@
 import java.util.Arrays;
-import java.util.HashSet;
 class Solution {
     public int solution(int[] nums) {
+        Arrays.sort(nums);
+        int cnt=1;
+        int num=nums[0];
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]!=num){
+                cnt++;
+                num=nums[i];
+            }
+        }
+        return cnt<nums.length/2? cnt:nums.length/2;
+        
+//        방법1
 //        int answer = nums.length/2;
-        //여기까지는 생각했는데 흠.. 해쉬도 모르고 아래 코드도..
-        //자바 공부 다시 해야할듯..
 //        int[] distArr = Arrays.stream(nums).distinct().toArray();
 //        if(distArr.length < nums.length/2)
 //            answer = distArr.length;
-		int answer = 0;
-		int maximum = nums.length / 2;
-		HashSet<Integer> kinds = new HashSet<>();
-		for (int i : nums ) {
-		    kinds.add(i);
-		}
-		if(kinds.size() >= maximum)  answer = maximum;
-		else answer = kinds.size() ;
-        return answer;
+        
+        //방법2
+		//int answer = 0;
+		//int maximum = nums.length / 2;
+		//HashSet<Integer> kinds = new HashSet<>();
+		//for (int i : nums ) {
+		//    kinds.add(i);
+		//}
+		//if(kinds.size() >= maximum)  answer = maximum;
+		//else answer = kinds.size() ;
+        //return answer;
+        
+        
     }
 }
