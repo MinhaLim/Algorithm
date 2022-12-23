@@ -1,46 +1,36 @@
 class Solution {
     public int solution(String dartResult) {
-        int answer = 0;
-        int[] arr = new int[4];
-        char[] c = dartResult.toCharArray();
-        int idx = 0;
-        int i=0;
-        if(c[0]-'0'==1&&c[1]-'0'==0){
-            arr[idx]=10;
-            i++;
-        }
-        else arr[idx]=c[0]-'0';
-        for(i=1;i<c.length;i++){
-            if(c[i]=='S'){
-                arr[idx]=(int)Math.pow(arr[idx],1);
-            }
-            if(c[i]=='D'){
-                arr[idx]=(int)Math.pow(arr[idx],2);
-            }
-            if(c[i]=='T'){
-                 arr[idx]=(int)Math.pow(arr[idx],3);
-            }
-            if(c[i]=='*'){
-                if(idx==0) arr[idx]*=2;
-                else {
-                    arr[idx-1]*=2;
-                    arr[idx]*=2;
-                }
-            }
-            if(c[i]=='#'){
-                arr[idx]*=-1;
-            }
-            if(c[i]>='0'&&c[i]<='9'){
-                if(c[i+1]=='0') {
-                    arr[++idx] = 10;
-                    i++;
-                }
-                else arr[++idx] = c[i]-'0';
-            }
+         String numTemp="";
+        int Answer=0;
 
+        int lastScore=0;
+        int num=0;
+
+        char next=' ';
+
+        for(int i=0;i<dartResult.length();i++){
+            next=dartResult.charAt(i);
+            if(next=='S'||next=='D'||next=='T'){
+                lastScore=num;
+                num=Integer.parseInt(numTemp);
+                if(next=='D'){
+                    num*=num;
+                }else if(next=='T'){
+                    num=num*num*num;
+                }
+                Answer+=num;
+                numTemp="";
+            }else if(next=='#'){
+                num=-num;
+                Answer+=2*num;
+            }else if(next=='*'){
+                Answer+=num+lastScore;
+                num=2*(num);
+            }else{
+                numTemp=numTemp+next;
+            }
         }
-        for(int j:arr)
-        answer+=j;
-        return answer;
-    }
+
+      return Answer;
+  }
 }
