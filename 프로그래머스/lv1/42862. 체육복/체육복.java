@@ -1,27 +1,25 @@
-import java.util.*;
-import java.util.stream.Collectors;
-
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        //교집합 제거를 위한 교집합 생성
-		Set<Integer> realReserve, realLost, retainSet;
+int[] people = new int[n];
+        int answer = n;
 
-	    realReserve = Arrays.stream(reserve).boxed().collect(Collectors.toSet());
-		realLost = Arrays.stream(lost).boxed().collect(Collectors.toSet());
+        for (int l : lost) 
+            people[l-1]--;
+        for (int r : reserve) 
+            people[r-1]++;
 
-		retainSet = new HashSet<>(realReserve);
-		retainSet.retainAll(realLost);
-
-
-		realReserve.removeAll(retainSet);
-		realLost.removeAll(retainSet);
-
-		for (int r : realReserve)
-		    if (realLost.contains(r - 1))
-		        realLost.remove(r - 1);
-		    else if (realLost.contains(r + 1))
-		        realLost.remove(r + 1);
-
-		return n - realLost.size();
+        for (int i = 0; i < people.length; i++) {
+            if(people[i] == -1) {
+                if(i-1>=0 && people[i-1] == 1) {
+                    people[i]++;
+                    people[i-1]--;
+                }else if(i+1< people.length && people[i+1] == 1) {
+                    people[i]++;
+                    people[i+1]--;
+                }else 
+                    answer--;
+            }
+        }
+        return answer;
     }
 }
