@@ -1,6 +1,6 @@
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-int[] people = new int[n];
+        int[] people = new int[n];
         int answer = n;
 
         for (int l : lost) 
@@ -10,14 +10,14 @@ int[] people = new int[n];
 
         for (int i = 0; i < people.length; i++) {
             if(people[i] == -1) {
-                if(i-1>=0 && people[i-1] == 1) {
+                if(i-1>=0 && people[i-1] == 1) {    //전의 번호에게 옷 빌림
                     people[i]++;
                     people[i-1]--;
-                }else if(i+1< people.length && people[i+1] == 1) {
+                }else if(i+1< people.length && people[i+1] == 1) {  //앞의 번호에게 옷빌림
                     people[i]++;
                     people[i+1]--;
                 }else 
-                    answer--;
+                    answer--;   //옷 못빌림
             }
         }
         return answer;
